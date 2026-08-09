@@ -1,0 +1,89 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kronos-synapse"
+version = "0.1.0"
+description = "Decoder-only transformer trained from scratch on PyTorch — a research/educational chatbot"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+authors = [
+    {name = "Kronos AI"}
+]
+keywords = ["transformer", "gpt", "chatbot", "deep-learning", "pytorch"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "torch>=2.5.0",
+    "tokenizers>=0.20.0",
+    "typer>=0.12.0",
+    "rich>=13.7.0",
+    "pydantic>=2.9.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.66.0",
+    "requests>=2.32.0",
+    "numpy>=1.26.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "mypy>=1.11.0",
+    "black>=24.8.0",
+    "ruff>=0.6.0",
+    "pytest-cov>=4.1.0",
+    "types-pyyaml>=6.0",
+    "types-requests>=2.32.0",
+]
+
+[project.scripts]
+kronos-synapse = "kronos_synapse.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["kronos_synapse*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "B", "UP"]
+ignore = ["E501"]  # Line too long (handled by black)
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_any_generics = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=kronos_synapse --cov-report=term-missing"
