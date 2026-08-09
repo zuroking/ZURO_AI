@@ -1,0 +1,4 @@
+# Extra tooling for hacking on the project.
+-r requirements.txt
+pytest>=8.2.0
+mypy>=1.10.0
